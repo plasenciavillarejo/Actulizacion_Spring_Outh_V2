@@ -41,7 +41,7 @@ import com.nimbusds.jose.proc.SecurityContext;
 @Configuration
 @EnableWebSecurity
 class SecurityConfig {
-
+  
   @Bean
   @Order(1)
   SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {
@@ -139,5 +139,5 @@ class SecurityConfig {
   AuthorizationServerSettings authorizationServerSettings() {
     return AuthorizationServerSettings.builder().build();
   }
-
+  
 }
