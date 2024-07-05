@@ -16,6 +16,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import org.springframework.security.oauth2.core.oidc.OidcScopes;
@@ -43,6 +44,11 @@ import com.nimbusds.jose.proc.SecurityContext;
 class SecurityConfig {
   
   @Bean
+  static BCryptPasswordEncoder passwordEncoder() {
+      return new BCryptPasswordEncoder();
+  }
+  
+  @Bean
   @Order(1)
   SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {
     OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
@@ -63,9 +69,8 @@ class SecurityConfig {
   @Order(2)
   SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
     http.authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated())
-        .csrf(csrf -> csrf.disable())
-        .formLogin(Customizer.withDefaults());
-
+        .formLogin(Customizer.withDefaults())
+        .csrf(csrf -> csrf.disable());
     return http.build();
   }
 
@@ -84,7 +89,8 @@ class SecurityConfig {
   RegisteredClientRepository registeredClientRepository() {
     RegisteredClient oidcClient = RegisteredClient.withId(UUID.randomUUID().toString())
         .clientId("client-app")
-        .clientSecret("{noop}12345").clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
+        .clientSecret("{noop}12345")
+        .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
         // Forma de autorización tipicas utilizado el estandar OUATH2
         .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
         .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
