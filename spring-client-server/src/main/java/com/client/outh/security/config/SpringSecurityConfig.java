@@ -1,4 +1,4 @@
-package com.client.outh.v2.security.config;
+package com.client.outh.security.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

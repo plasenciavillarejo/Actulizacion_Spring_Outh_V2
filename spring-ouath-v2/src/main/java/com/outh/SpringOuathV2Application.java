@@ -1,13 +1,13 @@
-package com.client.outh.v2;
+package com.outh;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
+ 
 @SpringBootApplication
-public class SpringClientServerApplication {
+public class SpringOuathV2Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SpringClientServerApplication.class, args);
+		SpringApplication.run(SpringOuathV2Application.class, args);
 	}
 
 }

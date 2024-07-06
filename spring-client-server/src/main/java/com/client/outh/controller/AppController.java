@@ -1,4 +1,4 @@
-package com.client.outh.v2.controller;
+package com.client.outh.controller;
 
 import java.util.Collections;
 import java.util.List;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.client.outh.v2.dto.MensajeDto;
+import com.client.outh.dto.MensajeDto;
 
 @RestController
 public class AppController {
@@ -36,7 +36,6 @@ public class AppController {
   @GetMapping(value = "/authorized")
   public ResponseEntity<Map<String, String>> autorizacion(@RequestParam String code) {
     return new ResponseEntity<>(Collections.singletonMap("code", code), HttpStatus.OK);
-    
   }
   
 }

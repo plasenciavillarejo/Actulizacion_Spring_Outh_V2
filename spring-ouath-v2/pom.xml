@@ -10,11 +10,11 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	
-	<groupId>com.outh.v2</groupId>
-	<artifactId>spring-ouath-v2</artifactId>
+	<groupId>com.outh</groupId>
+	<artifactId>spring-ouath</artifactId>
 	<version>1.0.0</version>
 	
-	<name>spring-ouath-v2</name>
+	<name>spring-ouath</name>
 	<description>Servidor de Oauth2 Versión 2.1</description>
 	
 	

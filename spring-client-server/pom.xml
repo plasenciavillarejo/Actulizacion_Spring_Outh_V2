@@ -8,7 +8,8 @@
 		<version>3.2.7</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.client.outh.v2</groupId>
+	
+	<groupId>com.client.outh</groupId>
 	<artifactId>spring-client-server</artifactId>
 	<version>1.0.0</version>
 	<name>spring-client-server</name>
@@ -66,24 +67,6 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-			<!--<plugin>
-            <artifactId>maven-resources-plugin</artifactId>
-            <executions>
-                  <execution>
-                      <id>copy-resources</id>
-                      <phase>validate</phase>
-                      <goals><goal>copy-resources</goal></goals>
-                      <configuration>
-                          <outputDirectory>${basedir}/target/classes/static/</outputDirectory>
-                          <resources>
-                              <resource>
-                                  <directory>${basedir}/../app-client/dist</directory>
-                              </resource>
-                          </resources>
-                      </configuration>
-                  </execution>
-            </executions>
-        </plugin> -->
 		</plugins>
 	</build>
 

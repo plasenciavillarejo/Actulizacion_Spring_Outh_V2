@@ -1,4 +1,4 @@
-package com.client.outh.v2.dto;
+package com.client.outh.dto;
 
 import java.io.Serializable;
 

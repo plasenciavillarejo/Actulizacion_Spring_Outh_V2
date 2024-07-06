@@ -1,4 +1,4 @@
-package com.outh.v2.security.confg;
+package com.outh.security.confg;
 
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -13,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -41,19 +42,18 @@ import com.nimbusds.jose.proc.SecurityContext;
 
 @Configuration
 @EnableWebSecurity
-class SecurityConfig {
-  
+public class SecurityConfig {
+  /*
   @Bean
   static BCryptPasswordEncoder passwordEncoder() {
       return new BCryptPasswordEncoder();
   }
-  
+  */
   @Bean
   @Order(1)
   SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {
     OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
-    http.getConfigurer(OAuth2AuthorizationServerConfigurer.class).oidc(Customizer.withDefaults()); // Enable OpenID
-                                                                                                   // Connect 1.0
+    http.getConfigurer(OAuth2AuthorizationServerConfigurer.class).oidc(Customizer.withDefaults()); // Enable OpenID                                                                                            // Connect 1.0
     http
         // Redirect to the login page when not authenticated from the
         // authorization endpoint
@@ -68,12 +68,13 @@ class SecurityConfig {
   @Bean
   @Order(2)
   SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-    http.authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated())
+    http.authorizeHttpRequests(authorize -> authorize
+        .anyRequest().authenticated())
         .formLogin(Customizer.withDefaults())
         .csrf(csrf -> csrf.disable());
     return http.build();
   }
-
+  
   @Bean
   UserDetailsService userDetailsService() {
     UserDetails userDetails = User.builder()
@@ -110,16 +111,13 @@ class SecurityConfig {
     return new InMemoryRegisteredClientRepository(oidcClient);
   }
 
-    @Bean
-    JWKSource<SecurityContext> jwkSource() {
+  @Bean
+  JWKSource<SecurityContext> jwkSource() {
     KeyPair keyPair = generateRsaKey();
     RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
     RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
     // Está llave va a quedar registrada en el BE
-    RSAKey rsaKey = new RSAKey.Builder(publicKey)
-        .privateKey(privateKey)
-        .keyID(UUID.randomUUID().toString())
-        .build();
+    RSAKey rsaKey = new RSAKey.Builder(publicKey).privateKey(privateKey).keyID(UUID.randomUUID().toString()).build();
     JWKSet jwkSet = new JWKSet(rsaKey);
     return new ImmutableJWKSet<>(jwkSet);
   }
